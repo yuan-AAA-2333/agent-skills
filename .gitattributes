@@ -1,0 +1,3 @@
+# Keep line endings as LF in the working tree and in the repository.
+# These are Markdown skill definitions; CRLF conversion would add noise to diffs.
+* text=auto eol=lf
