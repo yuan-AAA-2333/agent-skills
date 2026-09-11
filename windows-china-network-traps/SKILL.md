@@ -157,7 +157,9 @@ A size that exactly matches the origin's `Content-Length`, a valid `MZ` header, 
 | `Clear-RecycleBin` **silently does nothing** when inherited ACLs block deletion (no error, no effect) | trust it | verify the entry count actually dropped |
 | Logging captured command output without truncation | `takeown /r` + `icacls /t` over 221k files produced a **93 MB / 710k-line log** | keep the first ~20 lines plus a total count |
 
-Also: `curl`, `wget`, `R` and `convert` are **PowerShell aliases**, not the real programs — `curl` is `Invoke-WebRequest`, and `convert` is the destructive NTFS volume converter. Call `C:\Windows\System32\curl.exe` explicitly.
+Also: `curl`, `wget`, `R`, `kill`, `sc` and `convert` are **PowerShell aliases**, not the real programs — `curl` is `Invoke-WebRequest`, `kill` is `Stop-Process`, `sc` is `Set-Content`, and `convert` is the destructive NTFS volume converter. Call `C:\Windows\System32\curl.exe` explicitly, and write `sc.exe` / `Remove-Item` rather than relying on the short name.
+
+**Aliases also outrank your own functions.** Command resolution order is **Alias → Function → Cmdlet → Application**, so `function Kill($p) { … }` never runs — every `Kill 'x'` silently binds to the built-in `Stop-Process` alias instead, and the error you get (`Cannot bind parameter 'InputObject'… Cannot convert "…" to type "System.Diagnostics.Process"`) points at the wrong thing entirely. Name helper functions unambiguously (`Remove-JunkItem`, never `Kill` / `Where` / `Select`).
 
 ## Rule 6b — Two "you can't query that" beliefs that are wrong
 
