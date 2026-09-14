@@ -1,4 +1,4 @@
-#requires -Version 5.1
+﻿#requires -Version 5.1
 <#
   Run-CodeMigration.ps1 -- 按清单依次迁移代码单元
   用法: ... Run-CodeMigration.ps1 -Units a,b,c   （不带 -Units 则跑默认全部剩余）
